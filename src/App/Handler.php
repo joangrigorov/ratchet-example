@@ -11,12 +11,12 @@ class Handler implements MessageComponentInterface
     private $connections = [];
 
     public function onOpen(ConnectionInterface $conn)  {
+		echo $conn->resourceId . ' connected' . PHP_EOL;
         $this->connections[$conn->resourceId] = $conn;
     }
 
     public function onMessage(ConnectionInterface $from, $msg)  {
         foreach ($this->connections as $receiver) {
-            if ($receiver == $from) continue;
             $receiver->send('> ' . $msg);
         }
     }
