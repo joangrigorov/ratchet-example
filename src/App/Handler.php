@@ -28,4 +28,11 @@ class Handler implements MessageComponentInterface
     public function onError(ConnectionInterface $conn, \Exception $e) 
     {
     }
+    
+    public function onZMQMessage($message)
+    {
+		foreach ($this->connections as $receiver) {
+            $receiver->send('NOTIFICATION: Something from the Web Server: ' . $message);
+        }
+	}
 }
